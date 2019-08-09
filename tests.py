@@ -53,8 +53,8 @@ class PartyTestsDatabase(unittest.TestCase):
         db.drop_all()
 
     def test_games(self):
-        # FIXME: test that the games page displays the game from example_data()
-        print("FIXME")
+        result = self.client.get("/games")
+        self.assertIn(b"terrible", result.data)
 
 
 def example_data():
