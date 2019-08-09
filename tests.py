@@ -52,7 +52,9 @@ class PartyTestsDatabase(unittest.TestCase):
         db.session.close()
         db.drop_all()
 
-    def test_games(self):
+    def test_games_with_rsvp(self):
+        with self.client.session_transaction() as sess:
+            sess["RSVP"] = True
         result = self.client.get("/games")
         self.assertIn(b"terrible", result.data)
 
