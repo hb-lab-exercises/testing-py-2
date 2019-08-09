@@ -18,12 +18,6 @@ def connect_to_db(app, db_uri="postgresql:///games"):
     db.init_app(app)
 
 
-def example_data():
-    """Create example data for the test database."""
-    # FIXME: write a function that creates a game and adds it to the database.
-    print("FIXME")
-
-
 if __name__ == '__main__':
     from party import app
 

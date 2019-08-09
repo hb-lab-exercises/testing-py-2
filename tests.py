@@ -1,7 +1,7 @@
 import unittest
 
 from party import app
-from model import db, example_data, connect_to_db
+from model import db, connect_to_db, Game
 
 
 class PartyTests(unittest.TestCase):
@@ -39,22 +39,39 @@ class PartyTestsDatabase(unittest.TestCase):
         app.config['TESTING'] = True
 
         # Connect to test database (uncomment when testing database)
-        # connect_to_db(app, "postgresql:///testdb")
+        connect_to_db(app, "postgresql:///testdb")
 
         # Create tables and add sample data (uncomment when testing database)
-        # db.create_all()
-        # example_data()
+        db.create_all()
+        example_data()
 
     def tearDown(self):
         """Do at end of every test."""
 
         # (uncomment when testing database)
-        # db.session.close()
-        # db.drop_all()
+        db.session.close()
+        db.drop_all()
 
     def test_games(self):
         # FIXME: test that the games page displays the game from example_data()
         print("FIXME")
+
+
+def example_data():
+    """Create example data for the test database."""
+    
+    # If data already exists, delete it.
+    Game.query.delete()
+
+    g1 = Game(name="Super Smash Bros",
+              description="A party fighting game by Nintendo.")
+    g2 = Game(name="Set",
+              description="A speed matching card game.")
+    g3 = Game(name="Monopoly",
+              description="A terrible game about capitalism.")
+
+    db.session.add_all([g1, g2, g3])
+    db.session.commit()
 
 
 if __name__ == "__main__":
